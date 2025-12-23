@@ -4,9 +4,9 @@ public class Participant {
 
     private static int idCounter = 1;
 
-    private int id;
-    private String name;
-    private String email;
+    private final int id;
+    private final String name;
+    private final String email;
 
     public Participant(String name, String email) {
         this.id = idCounter;
@@ -25,16 +25,8 @@ public class Participant {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String toString() {
