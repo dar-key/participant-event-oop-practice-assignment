@@ -1,33 +1,35 @@
 import java.time.LocalTime;
 
 import models.Event;
+import models.EventManager;
 import models.Participant;
 
 public class App {
     public static void main(String[] args) {
-        Event event1 = new Event("Meetup In Office 1", 3, LocalTime.of(12, 30, 0));
-
+        EventManager eventManager = new EventManager();
+        Event event1 = eventManager.createEvent("Important Event", 2, null);
         Participant part1 = new Participant("Bob", "bob155@work.com");
 
-        event1.addParticipant(part1);
-
-        System.out.println(event1);
+        eventManager.registerParticipant(event1, part1);
+        eventManager.printAllEvents();
 
         part1.setEmail("r.bob@work.com");
-
-        System.out.println(event1);
+        eventManager.printAllEvents();
 
         Participant part2 = new Participant("John", "a.john@mail.com");
-        event1.addParticipant(part2);
+        eventManager.registerParticipant(event1, part2);
+        eventManager.printAllEvents();
 
-        System.out.println(event1);
+        eventManager.registerParticipant(event1, part2); // John is already registered.
+        if (!event1.setMaxCapacity(1)) {
+            System.out.println("Error: capacity too small");
+        }
 
-        event1.addParticipant(part2);
-        event1.setMaxCapacity(2);
-        event1.addParticipant(new Participant("Walter", "white@work.com"));
+        Event event2 = eventManager.createEvent("Very Important Event", 1, LocalTime.of(15, 0, 0));
+        eventManager.registerParticipant(event2, new Participant("Walter", "white@work.com"));
+        eventManager.registerParticipant(event2, part2);
 
-        Event event2 = new Event("Important Event", 1, LocalTime.of(15, 0, 0));
-        event2.addParticipant(part2);
-        System.out.println(event2);
+        eventManager.printAllEvents();
+        eventManager.findEventByTitle("Very Important Event");
     }
 }

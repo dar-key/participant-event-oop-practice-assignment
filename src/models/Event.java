@@ -46,8 +46,12 @@ public class Event {
         return maxCapacity;
     }
 
-    public void setMaxCapacity(int maxCapacity) {
+    public boolean setMaxCapacity(int maxCapacity) {
+        if (maxCapacity < this.enrolledParticipants.size()) {
+            return false;
+        }
         this.maxCapacity = maxCapacity;
+        return true;
     }
 
     public LocalTime getStartTime() {
@@ -59,8 +63,7 @@ public class Event {
     }
 
     public List<Participant> getEnrolledParticipants() {
-
-        return this.enrolledParticipants;
+        return List.copyOf(this.enrolledParticipants);
     }
 
     public String toString() {
