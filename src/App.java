@@ -4,6 +4,7 @@ import java.util.List;
 import models.Event;
 import models.EventManager;
 import models.Participant;
+import models.Webinar;
 import models.Workshop;
 
 public class App {

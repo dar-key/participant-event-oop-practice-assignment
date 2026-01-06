@@ -1,6 +1,5 @@
+package models;
 import java.time.LocalTime;
-
-import models.Event;
 
 public class Webinar extends Event {
 
