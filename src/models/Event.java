@@ -3,15 +3,17 @@ package models;
 import java.time.LocalTime;
 import models.Participant;
 import java.util.List;
+import java.util.Objects;
 import java.util.ArrayList;
 
-public class Event {
+public abstract class Event implements Comparable<Event> { // abstract class
 
     private String title;
     private int maxCapacity;
     private LocalTime startTime;
     private List<Participant> enrolledParticipants;
 
+    // init
     public Event(String title, int maxCapacity, LocalTime startTime) {
         this.title = title;
         this.maxCapacity = maxCapacity;
@@ -19,14 +21,15 @@ public class Event {
         this.enrolledParticipants = new ArrayList<>();
     }
 
+    // Methods
     public boolean addParticipant(Participant participant) {
         if (this.enrolledParticipants.size() >= this.maxCapacity) {
-            System.out.println("Sorry, event is full!");
+            System.out.println("Failed: " + title + " is full.");
             return false;
         }
 
         if (enrolledParticipants.contains(participant)) {
-            System.out.println(participant.getName() + " is already registered.");
+            System.out.println("Failed: " + participant.getName() + " is already registered in " + title);
             return false;
         }
 
@@ -34,12 +37,9 @@ public class Event {
         return true;
     }
 
+    // Encapsulation
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getMaxCapacity() {
@@ -58,20 +58,38 @@ public class Event {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
     public List<Participant> getEnrolledParticipants() {
         return List.copyOf(this.enrolledParticipants);
     }
 
-    public String toString() {
-        String res = this.title + ". Start time: " + this.startTime + ". Participants:\n";
-        for (int i = 0; i < this.enrolledParticipants.size(); i++) {
-            res += this.enrolledParticipants.get(i).toString() + "\n";
-        }
-        return res;
+    @Override
+    public int compareTo(Event other) {
+        return this.startTime.compareTo(other.startTime);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Event event = (Event) o;
+        return Objects.equals(title, event.title) &&
+                Objects.equals(startTime, event.startTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, startTime);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Event: %s | Start Time: %s | Slots: %d/%d", title, startTime,
+                enrolledParticipants.size(), maxCapacity);
+    }
+
+    // Abstraction
+    public abstract String getEventType();
 
 }
