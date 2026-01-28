@@ -8,6 +8,8 @@ import services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -23,12 +25,12 @@ public class EventController {
     }
 
     @PostMapping("/workshop")
-    public Event createWorkshop(@RequestBody Workshop workshop) {
+    public Event createWorkshop(@Valid @RequestBody Workshop workshop) {
         return eventService.saveEvent(workshop);
     }
 
     @PostMapping("/webinar")
-    public Event createWebinar(@RequestBody Webinar webinar) {
+    public Event createWebinar(@Valid @RequestBody Webinar webinar) {
         return eventService.saveEvent(webinar);
     }
 

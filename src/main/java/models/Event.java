@@ -1,6 +1,10 @@
 package models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +19,13 @@ public abstract class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
+    @NotBlank(message = "Title cannot be empty")
     private String title;
+
+    @Min(value = 1, message = "Capacity must be at least 1")
     private int maxCapacity;
+
+    @NotNull(message = "Start time is required")
     private LocalDateTime startTime;
 
     public Event() {

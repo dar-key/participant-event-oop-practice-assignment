@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import models.Participant;
 import services.ParticipantService;
 
@@ -27,7 +28,7 @@ public class ParticipantController {
     }
 
     @PostMapping
-    public Participant createParticipant(@RequestBody Participant participant) {
+    public Participant createParticipant(@Valid @RequestBody Participant participant) {
         return participantService.saveParticipant(participant);
     }
 
