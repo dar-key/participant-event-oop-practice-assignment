@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/events")
 public class EventController {
 
     @Autowired
@@ -24,14 +24,9 @@ public class EventController {
     @Autowired
     private ParticipantRepository participantRepository;
 
-    @GetMapping("/events")
+    @GetMapping
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
-    }
-
-    @GetMapping("/participants")
-    public List<Participant> getAllParticipants() {
-        return participantRepository.findAll();
     }
 
     @PostMapping("/workshop")
@@ -44,22 +39,12 @@ public class EventController {
         return eventRepository.save(webinar);
     }
 
-    @DeleteMapping("/events/{id}")
+    @DeleteMapping("/{id}")
     public void deleteEvent(@PathVariable int id) {
         eventRepository.deleteById(id);
     }
 
-    @PostMapping("/participants")
-    public Participant createParticipant(@RequestBody Participant participant) {
-        return participantRepository.save(participant);
-    }
-
-    @DeleteMapping("/participants/{id}")
-    public void deleteParticipant(@PathVariable int id) {
-        participantRepository.deleteById(id);
-    }
-
-    @PostMapping("/events/{eventId}/register/{participantId}")
+    @PostMapping("/{eventId}/register/{participantId}")
     public Event registerParticipant(@PathVariable int eventId, @PathVariable int participantId) {
 
         Event event = eventRepository.findById(eventId)
