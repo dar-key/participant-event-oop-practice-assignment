@@ -12,27 +12,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import models.Participant;
-import repositories.ParticipantRepository;
+import services.ParticipantService;
 
 @RestController
 @RequestMapping("/participants")
 public class ParticipantController {
 
     @Autowired
-    private ParticipantRepository participantRepository;
+    private ParticipantService participantService;
 
     @GetMapping
     public List<Participant> getAllParticipants() {
-        return participantRepository.findAll();
+        return participantService.getAllParticipants();
     }
 
     @PostMapping
     public Participant createParticipant(@RequestBody Participant participant) {
-        return participantRepository.save(participant);
+        return participantService.saveParticipant(participant);
     }
 
     @DeleteMapping("/{id}")
     public void deleteParticipant(@PathVariable int id) {
-        participantRepository.deleteById(id);
+        participantService.deleteParticipant(id);
     }
 }
